@@ -50,6 +50,7 @@ def format_files(file, text):
 	csv_response = stream_firehose_string("code-index-files-csv", csv_line)
 	es_bulk_line = format_file_es_bulk_string(file, text)
 	es_response = stream_firehose_string("code-index-files-es-bulk", es_bulk_line)
+	print(json.dumps(es_response, indent=3))
 	return {"csv" : csv_response, "es" : es_response}
 
 def format_file_csv_string(file, text):
