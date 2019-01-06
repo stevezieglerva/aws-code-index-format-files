@@ -29,6 +29,7 @@ def lambda_handler(event, context):
 		file_text = get_file_text_from_s3_file_urls(file_refs, s3)
 
 		for file in file_text:
+			log.critical("procesing_file", file=file)
 			text = file_text[file]
 			format_files(file, text)
 

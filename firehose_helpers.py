@@ -9,13 +9,9 @@ def stream_firehose_event(firehose_name, event_data):
 	return response
 
 def stream_firehose_string(firehose_name, string_data):
-	print("About to stream into firehose: " + firehose_name)
 	firehose = boto3.client("firehose")
 	record = {"Data": string_data}
-	print("record=")
-	print(record)
 	response = firehose.put_record(DeliveryStreamName=firehose_name, Record=record)
-	print(response)
 	return response
 
 def add_timestamps_to_event(event_data):
