@@ -23,15 +23,17 @@ def lambda_handler(event, context):
 			log = setup_logging("aws-code-index-format-files", event, aws_request_id)
 
 		print("Started")
+		try:
+			s3 = boto3.resource("s3")
+			file_refs = get_files_from_s3_lambda_event(event)
+			file_text = get_file_text_from_s3_file_urls(file_refs, s3)
 
-		s3 = boto3.resource("s3")
-		file_refs = get_files_from_s3_lambda_event(event)
-		file_text = get_file_text_from_s3_file_urls(file_refs, s3)
-
-		for file in file_text:
-			log.critical("procesing_file", file=file)
-			text = file_text[file]
-			format_files(file, text)
+			for file in file_text:
+				log.critical("procesing_file", file=file)
+				text = file_text[file]
+				format_files(file, text)
+		except Exception as e:
+			log.exception("failed_to_process_lambda")
 
 		print("Finished")
 
