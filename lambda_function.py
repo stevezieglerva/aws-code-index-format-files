@@ -34,7 +34,7 @@ def lambda_handler(event, context):
 				format_files(file, text)
 		except Exception as e:
 			log.exception("failed_to_process_lambda")
-
+		log.critical("finished")
 		print("Finished")
 
 	except Exception as e:
